@@ -2,7 +2,7 @@ import type { ReportObject } from "../../types.js";
 
 /**
  * Calculates the overall coverage percentage across lines, functions, and
- * branches, and picks a badge colour based on thresholds.
+ * branches, and picks a badge color based on thresholds.
  *
  * @param report - The full report object.
  * @returns An object with `percentage` (fixed to 2 decimal places) and `color`.

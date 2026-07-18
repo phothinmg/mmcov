@@ -1,24 +1,34 @@
 {
-  "name": "mmcov",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "shiki": "^4.3.1",
-    "@shikijs/transformers": "^4.3.1",
-    "html-minifier-next": "^7.2.0",
-  },
-   "devDependencies": {
-    "@biomejs/biome": "^2.5.4",
-    "@types/html-minifier-next": "^2.1.1",
-    "@types/node": "^26.1.1",
-    "typescript": "^7.0.2"
-  }
+	"name": "mmcov",
+	"version": "0.0.1",
+	"description": "Lcov viewer",
+	"scripts": {
+		"lint": "biome check --write lib",
+		"fmt": "biome format --write",
+		"hooks:install": "bash scripts/install-hooks.sh",
+		"commit": "bash scripts/commit.sh"
+	},
+	"keywords": [
+		"lcov",
+		"lcov viewer"
+	],
+	"author": {
+		"name": "Pho Thin Mg",
+		"email": "phothinmg@disroot.org",
+		"url": "https://phothinmg.github.io/"
+	},
+	"license": "Apache-2.0",
+	"type": "module",
+	"dependencies": {
+		"@shikijs/transformers": "^4.3.1",
+		"html-minifier-next": "^7.2.0",
+		"shiki": "^4.3.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.4",
+		"@types/html-minifier-next": "^2.1.1",
+		"@types/node": "^26.1.1",
+		"susee": "^1.5.6",
+		"typescript": "^7.0.2"
+	}
 }

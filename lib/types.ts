@@ -1,16 +1,27 @@
+/** Aggregated count and percentage for a single coverage category (lines, functions, or branches). */
 type TotalSubObject = {
+	/** Total number of items found. */
 	found: number;
+	/** Number of items that were covered. */
 	covered: number;
+	/** Coverage percentage (0–100). */
 	percentage: number;
 };
 
+/** Coverage data and rendered output information for a single source file. */
 type FileObject = {
 	file: {
+		/** Relative path to the source file as recorded in the lcov report. */
 		entryPath: string;
+		/** Relative output path for the generated HTML page. */
 		outputPath: string;
+		/** Source lines of the file, optionally annotated with miss markers. */
 		codeLines: string[];
+		/** Shiki-highlighted HTML representation of the source code. */
 		highlightedCode: string;
+		/** Href used to link to this file's report page. */
 		linkHref: string;
+		/** Detected file extension (e.g. `"ts"`, `"js"`). */
 		fileExtension?: string;
 	};
 	lines: {
@@ -41,6 +52,7 @@ type FileObject = {
 	};
 };
 
+/** Top-level report containing totals and per-file coverage data. */
 type ReportObject = {
 	total: {
 		lines: TotalSubObject;
@@ -50,11 +62,17 @@ type ReportObject = {
 	files: FileObject[];
 };
 
+/** Options passed to `generateLcovReport` to control report generation. */
 type Options = {
+	/** Path to the lcov.info file (relative to `process.cwd()`). */
 	lcovPath: string;
+	/** Source directories to include in the report (e.g. `["src", "lib"]`). */
 	sourceDirs: string[];
+	/** Output directory for the generated HTML files. Defaults to `"docs/coverage"`. */
 	destDir?: string;
+	/** Title displayed in the coverage report pages. */
 	projectTitle?: string;
+	/** Path to a custom favicon file. Falls back to the built-in icon when omitted. */
 	favicon?: string;
 };
 

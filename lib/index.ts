@@ -5,6 +5,12 @@ import { ReportGenerator } from "./generator/index.js";
 import { createFileHtml, createIndexHtml } from "./templates/index.js";
 import type { Options } from "./types.js";
 
+/**
+ * Generates and writes an individual HTML coverage page for every source file
+ * listed in the lcov report.
+ *
+ * @param opts - Report generation options.
+ */
 async function createFilePage(opts: Options) {
 	const report = new ReportGenerator(opts);
 	const lcov = report.generate();
@@ -23,6 +29,11 @@ async function createFilePage(opts: Options) {
 		await fs.promises.writeFile(filePath, minifiedHtml);
 	}
 }
+/**
+ * Generates and writes the `index.html` summary page for the coverage report.
+ *
+ * @param opts - Report generation options.
+ */
 async function createIndexPage(opts: Options) {
 	const report = new ReportGenerator(opts);
 	const lcov = report.generate();
@@ -40,6 +51,14 @@ async function createIndexPage(opts: Options) {
 	await fs.promises.writeFile(filePath, minifiedHtml);
 }
 
+/**
+ * Generates a full HTML coverage report from an lcov data file.
+ *
+ * Creates one HTML page per source file and an `index.html` summary page,
+ * writing all output to the directory specified by `opts.destDir`.
+ *
+ * @param opts - Report generation options.
+ */
 async function generateLcovReport(opts: Options) {
 	try {
 		await createFilePage(opts);

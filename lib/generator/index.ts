@@ -3,12 +3,21 @@ import path from "node:path";
 import type { FileObject, Options, ReportObject } from "../types.js";
 import { defaultLangs, shikiHL } from "./shiki.js";
 
+/**
+ * Parses an lcov report and produces a structured {@link ReportObject} that
+ * contains per-file coverage data together with syntax-highlighted source code
+ * ready for HTML rendering.
+ */
 class ReportGenerator {
 	private _root: string;
 	private _lcovPath: string;
 	private _sources: string[];
 	private _destDir: string;
 	private _report: ReportObject;
+	/**
+	 * @param opts - Options that control which lcov file to parse, which source
+	 *   directories to include, and where to write the output.
+	 */
 	constructor({ lcovPath, sourceDirs, destDir }: Options) {
 		this._root = process.cwd();
 		this._lcovPath = path.resolve(this._root, lcovPath);
@@ -35,6 +44,12 @@ class ReportGenerator {
 			files: [],
 		};
 	}
+	/**
+	 * Derives output file metadata from a source file's entry path.
+	 *
+	 * @param entryPath - The source file path as recorded in the lcov report.
+	 * @returns An object with the language extension, output HTML path, link text, and link href.
+	 */
 	private getOutInfo(entryPath: string) {
 		let ext = path.extname(entryPath).slice(1);
 		if (!defaultLangs.includes(ext)) {
@@ -47,6 +62,12 @@ class ReportGenerator {
 		const outputPath = path.join(this._destDir, file_name);
 		return { ext, outputPath, linkText: entryPath, linkHref: file_name };
 	}
+	/**
+	 * Reads and pre-processes the lcov file, returning one string per source-file
+	 * record filtered to the configured source directories.
+	 *
+	 * @returns An array of raw lcov record strings.
+	 */
 	private readLcov() {
 		const content = fs.readFileSync(this._lcovPath, "utf8");
 		const source_paths = this._sources.map(
@@ -74,6 +95,13 @@ class ReportGenerator {
 		});
 		return records;
 	}
+	/**
+	 * Parses a single lcov record string and produces a fully populated
+	 * {@link FileObject}, including syntax-highlighted source code.
+	 * The result is appended to the internal report and the running totals are updated.
+	 *
+	 * @param input - A single lcov record (lines between two `end_of_record` markers).
+	 */
 	private generateLcovSingleFile(input: string) {
 		const lines = input.split("\n");
 		const result: FileObject = {
@@ -275,6 +303,12 @@ class ReportGenerator {
 		}
 		this._report.files.push(result);
 	}
+	/**
+	 * Parses all lcov records and returns the completed {@link ReportObject}
+	 * with per-file data and aggregate totals.
+	 *
+	 * @returns The fully populated report object.
+	 */
 	generate() {
 		const records = this.readLcov();
 		records.forEach((record) => this.generateLcovSingleFile(record));

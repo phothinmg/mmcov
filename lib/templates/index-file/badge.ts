@@ -1,5 +1,12 @@
 import type { ReportObject } from "../../types.js";
 
+/**
+ * Calculates the overall coverage percentage across lines, functions, and
+ * branches, and picks a badge colour based on thresholds.
+ *
+ * @param report - The full report object.
+ * @returns An object with `percentage` (fixed to 2 decimal places) and `color`.
+ */
 function getOverAllPercentage(report: ReportObject) {
 	const totalFound =
 		report.total.lines.found +
@@ -24,6 +31,13 @@ function getOverAllPercentage(report: ReportObject) {
 		color,
 	};
 }
+/**
+ * Generates shields.io badge strings for embedding in Markdown and HTML, plus
+ * an inline `<img>` element for the report index page.
+ *
+ * @param report - The full report object used to compute the overall percentage.
+ * @returns An object with `markdown`, `html`, and `overall` badge strings.
+ */
 function generateBadge(report: ReportObject) {
 	const { percentage, color } = getOverAllPercentage(report);
 	const rexPercentage = /\{\{\s*percentage\s*\}\}/gm;

@@ -1,0 +1,27 @@
+export const themeInit = `(function () {
+        var themeKey = "mmcov_local_theme";
+        var root = document.documentElement;
+        var theme = "light";
+
+        try {
+          var storedTheme = localStorage.getItem(themeKey);
+          if (storedTheme === "dark" || storedTheme === "light") {
+            theme = storedTheme;
+          } else if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          ) {
+            theme = "dark";
+          }
+        } catch (e) {
+          if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          ) {
+            theme = "dark";
+          }
+        }
+
+        root.setAttribute("data-theme", theme);
+        root.style.colorScheme = theme;
+      })();`;

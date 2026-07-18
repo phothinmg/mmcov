@@ -26,7 +26,7 @@ const getFileTitle = (fileObj: FileObject, opts: Options) => {
 	return `${mainTitle}-${fileObj.file.entryPath}`;
 };
 /**
- * Capitalises the first letter of every word in `sentence`.
+ * Capitalists the first letter of every word in `sentence`.
  *
  * @param sentence - The input string.
  * @returns The title-cased string.

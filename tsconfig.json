@@ -41,5 +41,5 @@
 		"moduleDetection": "force",
 		"skipLibCheck": true
 	},
-	"include": ["lib/**/*"]
+	"include": ["lib/**/*", "susee.config.ts", "a.ts"]
 }

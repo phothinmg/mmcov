@@ -25,6 +25,12 @@ const rowHtml = `<tr>
 <td>{{ fileBranchInfo }}</td>
 </tr>`;
 
+/**
+ * Renders a single `<tr>` HTML row for the files table on the index page.
+ *
+ * @param fileObj - Coverage data for the source file.
+ * @returns The rendered `<tr>…</tr>` HTML string.
+ */
 const fileRows = (fileObj: FileObject) => {
 	let html = rowHtml;
 	html = html.replace(indexRegexp.linkText, fileObj.file.entryPath);
@@ -62,6 +68,12 @@ const fileRows = (fileObj: FileObject) => {
 	return html;
 };
 
+/**
+ * Renders all file rows for the coverage summary table on the index page.
+ *
+ * @param report - The full report object containing the list of files.
+ * @returns A string of concatenated `<tr>` HTML rows separated by newlines.
+ */
 function createFilesRows(report: ReportObject) {
 	return report.files.map(fileRows).join("\n");
 }

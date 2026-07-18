@@ -14,16 +14,35 @@ import { rex } from "./rex.js";
 import { themeInit } from "./theme-init.js";
 import { themeScript } from "./theme-script.js";
 
+/**
+ * Returns the HTML `<title>` string for a file coverage page.
+ *
+ * @param fileObj - Coverage data for the source file.
+ * @param opts - Report options; `projectTitle` is used when set.
+ * @returns A title string in the format `"<projectTitle>-<entryPath>"`.
+ */
 const getFileTitle = (fileObj: FileObject, opts: Options) => {
 	const mainTitle = opts.projectTitle ?? "Coverage Report";
 	return `${mainTitle}-${fileObj.file.entryPath}`;
 };
+/**
+ * Capitalises the first letter of every word in `sentence`.
+ *
+ * @param sentence - The input string.
+ * @returns The title-cased string.
+ */
 function capitalizeSentence(sentence: string) {
 	return sentence
 		.split(" ")
 		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 		.join(" ");
 }
+/**
+ * Returns the report title used in the index page heading.
+ *
+ * @param opts - Report options; `projectTitle` overrides the default `"Coverage Report"`.
+ * @returns The report title string.
+ */
 const getReportTitle = (opts: Options) => {
 	let title = "Coverage Report";
 	if (opts.projectTitle) {
@@ -31,6 +50,13 @@ const getReportTitle = (opts: Options) => {
 	}
 	return title;
 };
+/**
+ * Returns the full project name shown prominently on the index page.
+ *
+ * @param opts - Report options; when `projectTitle` is set the returned string
+ *   is `"<Title-Cased projectTitle> Coverage Report"`.
+ * @returns The project name string.
+ */
 const getProjectName = (opts: Options) => {
 	let title = "Coverage Report";
 	if (opts.projectTitle) {
@@ -40,10 +66,11 @@ const getProjectName = (opts: Options) => {
 	return title;
 };
 /**
+ * Builds the full HTML string for an individual source-file coverage page.
  *
- * @param fileObj
- * @param opts
- * @returns
+ * @param fileObj - Coverage data and highlighted source code for the file.
+ * @param opts - Report options (title, favicon, etc.).
+ * @returns The rendered HTML string (not yet minified).
  */
 function createFileHtml(fileObj: FileObject, opts: Options) {
 	let html = fileHtml;
@@ -95,6 +122,13 @@ function createFileHtml(fileObj: FileObject, opts: Options) {
 	return html;
 }
 
+/**
+ * Builds the full HTML string for the coverage index/summary page.
+ *
+ * @param obj - The complete report object with totals and per-file data.
+ * @param opts - Report options (title, favicon, etc.).
+ * @returns The rendered HTML string (not yet minified).
+ */
 function createIndexHtml(obj: ReportObject, opts: Options) {
 	let html = indexHtml;
 	// main documents attrs

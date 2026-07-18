@@ -30,6 +30,14 @@ const highlighter = await createHighlighter({
 	],
 	themes: ["light-plus", "dark-plus"],
 });
+/**
+ * Syntax-highlights `code` using Shiki with the `light-plus` / `dark-plus`
+ * dual-theme configuration and the notation-highlight transformer.
+ *
+ * @param code - The source code string to highlight.
+ * @param lang - The language identifier (e.g. `"ts"`, `"js"`).
+ * @returns An HTML string containing the highlighted code block.
+ */
 function shikiHL(code: string, lang: any) {
 	return highlighter.codeToHtml(code, {
 		lang: lang,

@@ -23,6 +23,8 @@ pnpm add -D mmcov
 
 ## Usage
 
+### Programmatic
+
 Import `generateLcovReport` and call it with an options object.
 
 ```js
@@ -36,6 +38,33 @@ await generateLcovReport({
   favicon: "public/favicon.ico",
 });
 ```
+
+### CLI
+
+`mmcov` also ships a command-line interface.
+
+```sh
+# Show help
+mmcov --help
+
+# Generate from a positional lcov file argument
+mmcov coverage/lcov.info
+
+# Generate with explicit options
+mmcov --entry coverage/lcov.info --out docs/coverage --source src,lib --project my-project
+```
+
+**CLI options**
+
+| Flag | Description |
+| --- | --- |
+| `<entry>` | Path to the lcov file (positional, optional when `--entry` is used) |
+| `--entry <path>` | Path to the lcov file |
+| `--out <path>` | Output directory (maps to `destDir`) |
+| `--source <dirs>` | Comma-separated source directories to include (maps to `sourceDirs`) |
+| `--favicon <path>` | Path to a custom favicon file |
+| `--project <name>` | Project name; hyphens are replaced with spaces |
+| `--help` | Print help text |
 
 ## API
 
@@ -83,7 +112,8 @@ Files outside those extensions fall back to plain text highlighting.
 
 ## Notes
 
-- If `sourceDirs`, that should match the prefixes used by `SF:` records in your LCOV file.
+- If `sourceDirs` is provided, it should match the prefixes used by `SF:` records in your LCOV file.
+- The input file is validated as proper LCOV format before processing; an invalid file causes the process to exit with an error message.
 - Output file names for source pages are derived from the original file path and flattened into HTML files inside `destDir`.
 - The report pages are static and do not require a server-side runtime.
 

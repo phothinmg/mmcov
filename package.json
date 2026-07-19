@@ -18,6 +18,9 @@
 			}
 		}
 	},
+	"bin": {
+		"mmcov": "bin/mmcov"
+	},
 	"scripts": {
 		"lint": "biome check --write lib",
 		"fmt": "biome format --write",
@@ -57,7 +60,8 @@
 		"README.md",
 		"LICENSE",
 		"dist/**/*",
-		"public"
+		"public",
+		"bin"
 	],
 	"publishConfig": {
 		"access": "public"

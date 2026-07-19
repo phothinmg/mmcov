@@ -5,3 +5,4 @@ lcov.info
 a.ts
 docs
 __tests__
+cli.js

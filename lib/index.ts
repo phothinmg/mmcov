@@ -11,7 +11,7 @@ import type { Options } from "./types.js";
  *
  * @param opts - Report generation options.
  */
-async function createFilePage(opts: Options) {
+async function createFilePage(opts: Options): Promise<void> {
 	const report = new ReportGenerator(opts);
 	const lcov = await report.generate();
 	for (const file of lcov.files) {
@@ -34,7 +34,7 @@ async function createFilePage(opts: Options) {
  *
  * @param opts - Report generation options.
  */
-async function createIndexPage(opts: Options) {
+async function createIndexPage(opts: Options): Promise<void> {
 	const report = new ReportGenerator(opts);
 	const lcov = await report.generate();
 	const fileName = opts.destDir
@@ -59,7 +59,7 @@ async function createIndexPage(opts: Options) {
  *
  * @param opts - Report generation options.
  */
-async function generateLcovReport(opts: Options) {
+async function generateLcovReport(opts: Options): Promise<void> {
 	try {
 		await createFilePage(opts);
 		await createIndexPage(opts);

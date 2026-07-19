@@ -1,0 +1,110 @@
+#!/usr/bin/env node
+import { generateLcovReport } from "../dist/index.mjs";
+import { argv, exit } from "process";
+import { styleText } from "util";
+
+/**
+ *
+ * @param {string} message
+ */
+function fail(message) {
+    console.error(`[Error] : ${message}`);
+    exit(1);
+}
+
+function printHelp() {
+    const help = `${styleText("bold", "mmcov cli")}
+    ${styleText("bold", "Usage :")}
+        mmcov --help                          Show help
+        mmcov <entry> [options]               Generate report from entry lcov file.
+    ${styleText("bold", "Options :")}
+        --entry <path>                        Entry file (optional if provided as positional <entry>)
+        --out <path>                          Output directory (optional)
+        --source <...path>                    Source directories to include in the report (optional)
+        --favicon <path>                      Path to a custom favicon file. (optional)
+        --project <name>                      Name of the project. (optional , example -> "my-project")
+        
+    ${styleText("bold", "Examples :")}
+        mmcov lcov.info                        Generate from .lcov file.
+        mmcov --entry lcov.info -out coverage  Generate from .lcov file to /coverage directory
+    `;
+    console.log(help);
+}
+
+async function mmcov() {
+    let opts = {};
+    const argvs = argv.slice(2);
+    if (argvs.length === 0) {
+        fail("One cli argument required.");
+    } else if (argvs.length === 1) {
+        const arg1 = argvs[0];
+        if (!arg1.startsWith("-")) {
+            opts.lcovPath = arg1;
+            await generateLcovReport({ lcovPath: arg1 });
+        } else if (arg1 === "--help") {
+            printHelp();
+        } else {
+            fail(`For only one cli option must be lcov file or "--help". "mmcov --help" for detail.`);
+        }
+    } else if (argvs.length > 1) {
+        let i = 0;
+        while (i < argvs.length) {
+            const arg = argvs[i];
+            if (i === 0 && !arg.startsWith("-")) {
+                opts.lcovPath = arg;
+                i += 1;
+            } else {
+                switch (arg) {
+                    case "--entry":
+                        if (argvs[i + 1].startsWith("-")) {
+                            fail(`Invalid cli usage "${arg} ${argvs[i + 1]}". "mmcov --help" for detail.`);
+                        } else {
+                            opts.lcovPath = argvs[i + 1];
+                            i += 2;
+                        }
+                        break;
+                    case "--out":
+                        if (argvs[i + 1].startsWith("-")) {
+                            fail(`Invalid cli usage "${arg} ${argvs[i + 1]}". "mmcov --help" for detail.`);
+                        } else {
+                            opts["destDir"] = argvs[i + 1];
+                            i += 2;
+                        }
+                        break;
+                    case "--source":
+                        if (argvs[i + 1].startsWith("-")) {
+                            fail(`Invalid cli usage "${arg} ${argvs[i + 1]}". "mmcov --help" for detail.`);
+                        } else {
+                            opts["sourceDirs"] = argvs[i + 1].split(",");
+                            i += 2;
+                        }
+                        break;
+                    case "--favicon":
+                        if (argvs[i + 1].startsWith("-")) {
+                            fail(`Invalid cli usage "${arg} ${argvs[i + 1]}"`);
+                        } else {
+                            opts["favicon"] = argvs[i + 1];
+                            i += 2;
+                        }
+                        break;
+                    case "--project":
+                        if (argvs[i + 1].startsWith("-")) {
+                            fail(`Invalid cli usage "${arg} ${argvs[i + 1]}". "mmcov --help" for detail.`);
+                        } else {
+                            opts["projectTitle"] = argvs[i + 1].split("-").join(" ");
+                            i += 2;
+                        }
+                        break;
+                    default:
+                        i += 1;
+                        break;
+                }
+            }
+        }
+    }
+    await generateLcovReport(opts);
+}
+
+void mmcov().catch((error) => {
+    fail(error);
+});

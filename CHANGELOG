@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.3]-2026-07-19
+
 ### Fixed
 
 - Top level `await` in `lib/generator/shiki.ts` for commonjs output error.
@@ -17,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Check the content of the lcov file are valid lcov format or not.(private method `isLcov` at `ReportGenerator` class.).
+- Add cli with same options with programmatic usage.
 
 ### Changed
 
@@ -25,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.0.1]-2026-07-19
+## [0.0.2]-2026-07-19
 
 ### Added
 

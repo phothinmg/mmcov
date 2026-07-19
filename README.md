@@ -103,3 +103,7 @@ Files outside those extensions fall back to plain text highlighting.
 
 <img src="./public/badge-light.png" width="800" alt="badge-light" />
 <img src="./public/badge-dark.png" width="800" alt="badge-dark" />
+
+## License
+
+[Apache-2.0](LICENSE) © [Pho Thin Maung](phothinmg.github.io)

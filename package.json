@@ -23,7 +23,10 @@
 		"fmt": "biome format --write",
 		"hooks:install": "bash scripts/install-hooks.sh",
 		"commit": "bash scripts/commit.sh",
-		"build": "susee"
+		"build": "susee",
+		"v:patch": "npm version patch --no-git-tag-version",
+		"v:minor": "npm version minor --no-git-tag-version",
+		"v:major": "npm version major --no-git-tag-version"
 	},
 	"keywords": [
 		"lcov",

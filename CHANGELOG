@@ -25,7 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Required `options.sourceDirs` to optional `options.sourceDirs`.
 
-
 ---
 
 ## [0.0.2]-2026-07-19
@@ -49,53 +48,4 @@ Changed : for changes in existing functionality.
 Deprecated : for soon-to-be removed features.
 Fixed : for any bug fixes.
 Security : in case of vulnerabilities.
- -->
-
-<!--
-
-## [Unreleased]
-
-### Added
-- New dark mode toggle to the user settings dashboard.
-- Automatic session timeout alert after 15 minutes of inactivity.
-
-### Fixed
-- Memory leak issue causing high CPU usage during large data CSV exports.
-
-## - 2026-06-15
-
-### Added
-- Integration with external payment gateways for global currencies.
-- Multilingual support for Spanish, French, and Japanese languages.
-
-### Changed
-- Refactored the core authentication middleware to improve loading speed by 20%.
-- Updated the primary font family to enhance accessibility and UI readability.
-
-### Deprecated
-- The legacy `/api/v1/old-auth` endpoint will be removed in version 2.0.0.
-
-### Removed
-- Removed the deprecated background synchronization service tool.
-
-## - 2026-03-22
-
-### Fixed
-- Broken profile picture upload button on mobile Safari browsers.
-- Spelling error inside the welcome email notification template.
-
-### Security
-- Patched cross-site scripting (XSS) vulnerability found in the comments input section.
-
-## - 2026-01-10
-
-### Added
-- Initial public release of the responsive web application dashboard.
-- User account creation, profile management, and password recovery systems.
-
-[unreleased]: https://github.com
-: https://github.com
-: https://github.com
-: https://github.com
-
  -->

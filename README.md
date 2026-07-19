@@ -1,12 +1,7 @@
-# mmcov
-
-## Overview
+<!-- markdownlint-disable MD033 -->
+# <img src="./public/star.svg" alt="mmcov" width="20" hight="20" /> mmcov
 
 A technical tool designed to transform raw lcov coverage data into human-readable, static HTML reports.
-
-### Key Technologies
-
-TypeScript, Node.js, Shiki (Syntax Highlighting), html-minifier-next, Biome (Linting/Formatting), susee (Build Tool).
 
 ## Getting Started
 
@@ -52,8 +47,24 @@ await generateLcovReport(options);
 | projectTitle | string   | No       | Title displayed in the header of the generated HTML pages                                            |
 | favicon      | string   | No       | Path to a custom `.ico` file. If omitted, a default icon is used                                     |
 
+## Features
+
+- The `mmcov` pipeline transforms raw LCOV data into a navigable, minified HTML report.
+- The coverage badge system in `mmcov` provides a visual summary of the project's health by calculating an aggregate coverage metric and generating embeddable assets.
+
 ## UI
 
-![Home Dark](./public/home_ss_dark.png)
+### Home
 
-![Home Light](./public/home_ss_light.png)
+<img src="./public/home-light.png" width="400" alt="home-light" />
+<img src="./public/home-dark.png" width="400" alt="home-dark" />
+
+### File
+
+<img src="./public/file-light.png" width="400" alt="file-light" />
+<img src="./public/file-dark.png" width="400" alt="file-dark" />
+
+### Badge
+
+<img src="./public/badge-light.png" width="800" alt="home-light" />
+<img src="./public/badge-dark.png" width="800" alt="home-dark" />

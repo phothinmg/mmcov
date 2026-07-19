@@ -1,58 +1,93 @@
 <!-- markdownlint-disable MD033 -->
 # <img src="./public/star.svg" alt="mmcov" width="20" hight="20" /> mmcov
 
-A technical tool designed to transform raw lcov coverage data into human-readable, static HTML reports.
+`mmcov` is a Node.js library that converts an `lcov.info` file into a static HTML coverage site.
 
-## Getting Started
+It generates:
 
-### Installation
+- an `index.html` summary page
+- one HTML page per covered source file
+- an overall coverage badge with Markdown and HTML copy snippets
 
-`mmcov` is distributed as a Node.js package. You can install it using your preferred package manager. The package provides both ESM and CommonJS exports.
+## Installation
+
+`mmcov` is published as a package with ESM and CommonJS exports.
 
 ```sh
-# Using npm
-npm install mmcov --save-dev
+# npm
+npm install --save-dev mmcov
 
-# Using pnpm
+# pnpm
 pnpm add -D mmcov
 ```
 
-### Basic Usage
+## Usage
 
-To generate a report, you must import the `generateLcovReport` function and provide an Options configuration object. This function orchestrates the parsing of your `lcov.info` file, syntax highlighting via Shiki, and the generation of minified HTML files.
-
-#### Example Implementation
+Import `generateLcovReport` and call it with an options object.
 
 ```js
 import { generateLcovReport } from "mmcov";
 
-const options = {
-  lcovPath: "./coverage/lcov.info",
+await generateLcovReport({
+  lcovPath: "coverage/lcov.info",
   sourceDirs: ["lib", "src"],
-  destDir: "./docs/coverage",
-  projectTitle: "My Project Coverage",
-  favicon: "./assets/favicon.ico",
-};
-
-await generateLcovReport(options);
+  destDir: "docs/coverage",
+  projectTitle: "My Project",
+  favicon: "public/favicon.ico",
+});
 ```
 
-### Configuration
+## API
 
-| Option       | Type     | Required | Description                                                                                          |
-| ------------ | -------- | -------- | ---------------------------------------------------------------------------------------------------- |
-| lcovPath     | string   | Yes      | Path to the `lcov.info` file relative to the current working directory                               |
-| sourceDirs   | string[] | Yes      | Directories containing the source code (e.g., ["src"]). Used to resolve file paths found in the LCOV |
-| destDir      | string   | No       | Target directory for HTML output. Defaults to "docs/coverage"                                        |
-| projectTitle | string   | No       | Title displayed in the header of the generated HTML pages                                            |
-| favicon      | string   | No       | Path to a custom `.ico` file. If omitted, a default icon is used                                     |
+### `generateLcovReport(options)`
 
-## Features
+Parses the LCOV file, loads matching source files from the current working directory, applies Shiki syntax highlighting, and writes minified HTML output.
 
-- The `mmcov` pipeline transforms raw LCOV data into a navigable, minified HTML report.
-- The coverage badge system in `mmcov` provides a visual summary of the project's health by calculating an aggregate coverage metric and generating embeddable assets.
+## Options
 
-## UI
+| Option | Type | Required | Description |
+| --- | --- | --- | --- |
+| `lcovPath` | `string` | Yes | Path to the `lcov.info` file, resolved from `process.cwd()` |
+| `sourceDirs` | `string[]` | Yes | Source directory prefixes to include from LCOV `SF:` entries, such as `src` or `lib` |
+| `destDir` | `string` | No | Output directory for generated files. Defaults to `docs/coverage` |
+| `projectTitle` | `string` | No | Custom title used in the report header and page titles |
+| `favicon` | `string` | No | Path to a custom `.ico` file. When omitted, the built-in icon is used |
+
+## Generated output
+
+By default, `mmcov` writes the report to `docs/coverage`.
+
+The generated site includes:
+
+- total line, function, and branch coverage on the index page
+- a file table with per-file coverage percentages and links
+- file detail pages with syntax-highlighted source code
+- highlighted missed lines in the source view
+- light and dark theme switching stored in local storage
+- badge snippets that can be copied as Markdown or HTML
+
+## Supported highlighting
+
+The built-in syntax highlighter is configured for:
+
+- `ts`
+- `js`
+- `tsx`
+- `jsx`
+- `json`
+- `cts`
+- `mjs`
+- `mts`
+
+Files outside those extensions fall back to plain text highlighting.
+
+## Notes
+
+- `sourceDirs` should match the prefixes used by `SF:` records in your LCOV file.
+- Output file names for source pages are derived from the original file path and flattened into HTML files inside `destDir`.
+- The report pages are static and do not require a server-side runtime.
+
+## UI preview
 
 ### Home
 
@@ -66,5 +101,5 @@ await generateLcovReport(options);
 
 ### Badge
 
-<img src="./public/badge-light.png" width="800" alt="home-light" />
-<img src="./public/badge-dark.png" width="800" alt="home-dark" />
+<img src="./public/badge-light.png" width="800" alt="badge-light" />
+<img src="./public/badge-dark.png" width="800" alt="badge-dark" />

@@ -13,7 +13,7 @@ import type { Options } from "./types.js";
  */
 async function createFilePage(opts: Options) {
 	const report = new ReportGenerator(opts);
-	const lcov = report.generate();
+	const lcov = await report.generate();
 	for (const file of lcov.files) {
 		const filePath = path.resolve(process.cwd(), file.file.outputPath);
 		const html = createFileHtml(file, opts);
@@ -36,12 +36,12 @@ async function createFilePage(opts: Options) {
  */
 async function createIndexPage(opts: Options) {
 	const report = new ReportGenerator(opts);
-	const lcov = report.generate();
+	const lcov = await report.generate();
 	const fileName = opts.destDir
 		? `${opts.destDir}/index.html`
 		: "docs/coverage/index.html";
 	const filePath = path.resolve(process.cwd(), fileName);
-	const html = createIndexHtml(lcov, opts);
+	const html = await createIndexHtml(lcov, opts);
 	const minifiedHtml = await minify(html, {
 		minifyCSS: true,
 		collapseWhitespace: true,

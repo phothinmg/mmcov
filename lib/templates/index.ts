@@ -129,7 +129,7 @@ function createFileHtml(fileObj: FileObject, opts: Options) {
  * @param opts - Report options (title, favicon, etc.).
  * @returns The rendered HTML string (not yet minified).
  */
-function createIndexHtml(obj: ReportObject, opts: Options) {
+async function createIndexHtml(obj: ReportObject, opts: Options) {
 	let html = indexHtml;
 	// main documents attrs
 	html = html.replace(rex.mainCss, mainCss);
@@ -141,8 +141,8 @@ function createIndexHtml(obj: ReportObject, opts: Options) {
 	// index html
 	const badge = generateBadge(obj);
 	html = html.replace(rex.badge, badge.overall);
-	html = html.replace(rex.mdBadge, shikiHL(badge.markdown, "md"));
-	html = html.replace(rex.htmlBadge, shikiHL(badge.html, "html"));
+	html = html.replace(rex.mdBadge, await shikiHL(badge.markdown, "md"));
+	html = html.replace(rex.htmlBadge, await shikiHL(badge.html, "html"));
 	html = html.replace(rex.indexCss, indexCss);
 	const projectTitle = getReportTitle(opts);
 	html = html.replace(rex.projectTitle, projectTitle);

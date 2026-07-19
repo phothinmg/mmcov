@@ -11,7 +11,7 @@ import { defaultLangs, shikiHL } from "./shiki.js";
 class ReportGenerator {
 	private _root: string;
 	private _lcovPath: string;
-	private _sources: string[];
+	private _sources: string[] | undefined;
 	private _destDir: string;
 	private _report: ReportObject;
 	/**
@@ -44,6 +44,16 @@ class ReportGenerator {
 			files: [],
 		};
 	}
+	private isLcov(text: string) {
+		if (typeof text !== "string" || !text.trim()) {
+			return false;
+		}
+		const hasValidPrefixes =
+			/^(TN:|SF:|FN:|DA:|BRDA:|LF:|LH:|BRF:|BRH:|FNF:|FNH:)/m.test(text);
+		const hasEndOfRecord = /end_of_record/m.test(text);
+
+		return hasValidPrefixes && hasEndOfRecord;
+	}
 	/**
 	 * Derives output file metadata from a source file's entry path.
 	 *
@@ -70,9 +80,12 @@ class ReportGenerator {
 	 */
 	private readLcov() {
 		const content = fs.readFileSync(this._lcovPath, "utf8");
-		const source_paths = this._sources.map(
-			(source) => `SF:${source.replace(/^\.\//, "")}/`,
-		);
+		if (!this.isLcov(content)) {
+			console.error(
+				`Content of "${path.relative(this._root, this._lcovPath)}" are not valid LCOV format.`,
+			);
+			process.exit(1);
+		}
 		let records = content
 			.split("end_of_record")
 			.map((r) => r.trim())
@@ -85,14 +98,20 @@ class ReportGenerator {
 				return rec.trim();
 			}
 		});
-		// filter records from source directories
-		records = records.filter((rec) => {
-			for (const path of source_paths) {
-				if (rec.startsWith(path)) {
-					return rec;
+		if (this._sources && this._sources.length > 0) {
+			const source_paths = this._sources.map(
+				(source) => `SF:${source.replace(/^\.\//, "")}/`,
+			);
+			// filter records from source directories
+			records = records.filter((rec) => {
+				for (const path of source_paths) {
+					if (rec.startsWith(path)) {
+						return rec;
+					}
 				}
-			}
-		});
+			});
+		}
+
 		return records;
 	}
 	/**
@@ -102,7 +121,7 @@ class ReportGenerator {
 	 *
 	 * @param input - A single lcov record (lines between two `end_of_record` markers).
 	 */
-	private generateLcovSingleFile(input: string) {
+	private async generateLcovSingleFile(input: string) {
 		const lines = input.split("\n");
 		const result: FileObject = {
 			file: {
@@ -299,7 +318,10 @@ class ReportGenerator {
 		// highlight code
 		if (result.file.fileExtension) {
 			const code = result.file.codeLines.join("\n");
-			result.file.highlightedCode = shikiHL(code, result.file.fileExtension);
+			result.file.highlightedCode = await shikiHL(
+				code,
+				result.file.fileExtension,
+			);
 		}
 		this._report.files.push(result);
 	}
@@ -309,9 +331,12 @@ class ReportGenerator {
 	 *
 	 * @returns The fully populated report object.
 	 */
-	generate() {
+	async generate() {
 		const records = this.readLcov();
-		records.forEach((record) => this.generateLcovSingleFile(record));
+		for (const record of records) {
+			await this.generateLcovSingleFile(record);
+		}
+
 		if (this._report.total.lines.found > 0) {
 			this._report.total.lines.percentage =
 				(this._report.total.lines.covered / this._report.total.lines.found) *

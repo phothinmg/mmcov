@@ -67,7 +67,7 @@ type Options = {
 	/** Path to the lcov.info file (relative to `process.cwd()`). */
 	lcovPath: string;
 	/** Source directories to include in the report (e.g. `["src", "lib"]`). */
-	sourceDirs: string[];
+	sourceDirs?: string[];
 	/** Output directory for the generated HTML files. Defaults to `"docs/coverage"`. */
 	destDir?: string;
 	/** Title displayed in the coverage report pages. */

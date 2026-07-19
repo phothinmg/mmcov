@@ -1,4 +1,6 @@
 import type { SuSeeConfig } from "susee";
+import { suseeTerser } from "@suseejs/terser-plugin";
+
 const config: SuSeeConfig = {
 	// Array of entry point objects.
 	// ----------------------------
@@ -22,7 +24,7 @@ const config: SuSeeConfig = {
 			//tsconfigFilePath: undefined,
 			// (optional) Array of susee plugins, default: [].
 			// Uncomment the following line to edit.
-			// plugins: [],
+			plugins: [suseeTerser],
 			// (optional) Warning messages, if it true and warning message exist(1), default: false.
 			// Uncomment the following line to edit.
 			//warning: false,

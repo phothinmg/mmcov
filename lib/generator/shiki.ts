@@ -13,23 +13,6 @@ const defaultLangs = [
 	"mts",
 ];
 
-const highlighter = await createHighlighter({
-	langs: [
-		"ts",
-		"js",
-		"tsx",
-		"jsx",
-		"json",
-		"text",
-		"cts",
-		"mjs",
-		"cts",
-		"mts",
-		"html",
-		"md",
-	],
-	themes: ["light-plus", "dark-plus"],
-});
 /**
  * Syntax-highlights `code` using Shiki with the `light-plus` / `dark-plus`
  * dual-theme configuration and the notation-highlight transformer.
@@ -38,8 +21,25 @@ const highlighter = await createHighlighter({
  * @param lang - The language identifier (e.g. `"ts"`, `"js"`).
  * @returns An HTML string containing the highlighted code block.
  */
-function shikiHL(code: string, lang: any) {
-	return highlighter.codeToHtml(code, {
+async function shikiHL(code: string, lang: any) {
+	const highlighter = await createHighlighter({
+		langs: [
+			"ts",
+			"js",
+			"tsx",
+			"jsx",
+			"json",
+			"text",
+			"cts",
+			"mjs",
+			"cts",
+			"mts",
+			"html",
+			"md",
+		],
+		themes: ["light-plus", "dark-plus"],
+	});
+	const result = highlighter.codeToHtml(code, {
 		lang: lang,
 		themes: {
 			light: "light-plus",
@@ -51,6 +51,8 @@ function shikiHL(code: string, lang: any) {
 			}),
 		],
 	});
+	highlighter.dispose();
+	return result;
 }
 
 export { defaultLangs, shikiHL };

@@ -4,3 +4,4 @@ src
 lcov.info
 a.ts
 docs
+__tests__

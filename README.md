@@ -48,7 +48,7 @@ Parses the LCOV file, loads matching source files from the current working direc
 | Option | Type | Required | Description |
 | --- | --- | --- | --- |
 | `lcovPath` | `string` | Yes | Path to the `lcov.info` file, resolved from `process.cwd()` |
-| `sourceDirs` | `string[]` | Yes | Source directory prefixes to include from LCOV `SF:` entries, such as `src` or `lib` |
+| `sourceDirs` | `string[]` | No | Source directory prefixes to include from LCOV `SF:` entries, such as `src` or `lib` |
 | `destDir` | `string` | No | Output directory for generated files. Defaults to `docs/coverage` |
 | `projectTitle` | `string` | No | Custom title used in the report header and page titles |
 | `favicon` | `string` | No | Path to a custom `.ico` file. When omitted, the built-in icon is used |
@@ -83,7 +83,7 @@ Files outside those extensions fall back to plain text highlighting.
 
 ## Notes
 
-- `sourceDirs` should match the prefixes used by `SF:` records in your LCOV file.
+- If `sourceDirs`, that should match the prefixes used by `SF:` records in your LCOV file.
 - Output file names for source pages are derived from the original file path and flattened into HTML files inside `destDir`.
 - The report pages are static and do not require a server-side runtime.
 

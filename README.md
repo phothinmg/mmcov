@@ -53,7 +53,7 @@ mmcov coverage/lcov.info
 # Generate with explicit options
 mmcov --entry coverage/lcov.info --out docs/coverage --source src,lib --project my-project
 ```
-
+<!-- markdownlint-disable MD036 -->
 **CLI options**
 
 | Flag | Description |
@@ -133,6 +133,10 @@ Files outside those extensions fall back to plain text highlighting.
 
 <img src="./public/badge-light.png" width="800" alt="badge-light" />
 <img src="./public/badge-dark.png" width="800" alt="badge-dark" />
+
+## Changelog
+
+<https://github.com/phothinmg/mmcov/blob/main/CHANGELOG.md>
 
 ## License
 

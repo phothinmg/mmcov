@@ -47,23 +47,31 @@ await generateLcovReport({
 # Show help
 mmcov --help
 
+# Run using options from mmcov.config.{ts,js,mjs}
+mmcov
+
+# Create a starter mmcov config file
+mmcov init
+
 # Generate from a positional lcov file argument
 mmcov coverage/lcov.info
 
 # Generate with explicit options
-mmcov --entry coverage/lcov.info --out docs/coverage --source src,lib --project my-project
+mmcov --entry coverage/lcov.info --out coverage --source src,lib --project my-project --mmdocs
 ```
 <!-- markdownlint-disable MD036 -->
 **CLI options**
 
 | Flag | Description |
 | --- | --- |
+| `init` | Generate a starter config file |
 | `<entry>` | Path to the lcov file (positional, optional when `--entry` is used) |
 | `--entry <path>` | Path to the lcov file |
 | `--out <path>` | Output directory (maps to `destDir`) |
 | `--source <dirs>` | Comma-separated source directories to include (maps to `sourceDirs`) |
 | `--favicon <path>` | Path to a custom favicon file |
 | `--project <name>` | Project name; hyphens are replaced with spaces |
+| `--mmdocs` | Enable MMDOCS-compatible link generation |
 | `--help` | Print help text |
 
 ## API
@@ -78,13 +86,14 @@ Parses the LCOV file, loads matching source files from the current working direc
 | --- | --- | --- | --- |
 | `lcovPath` | `string` | Yes | Path to the `lcov.info` file, resolved from `process.cwd()` |
 | `sourceDirs` | `string[]` | No | Source directory prefixes to include from LCOV `SF:` entries, such as `src` or `lib` |
-| `destDir` | `string` | No | Output directory for generated files. Defaults to `docs/coverage` |
+| `destDir` | `string` | No | Output directory for generated files. Defaults to `coverage` |
 | `projectTitle` | `string` | No | Custom title used in the report header and page titles |
 | `favicon` | `string` | No | Path to a custom `.ico` file. When omitted, the built-in icon is used |
+| `mmdocs` | `boolean` | No | Enables MMDOCS-compatible link paths in generated pages |
 
 ## Generated output
 
-By default, `mmcov` writes the report to `docs/coverage`.
+By default, `mmcov` writes the report to `coverage`.
 
 The generated site includes:
 

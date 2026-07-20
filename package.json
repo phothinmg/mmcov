@@ -1,77 +1,77 @@
 {
-	"name": "mmcov",
-	"version": "0.0.4",
-	"description": "Lcov viewer",
-	"type": "module",
-	"main": "dist/index.cjs",
-	"types": "dist/index.d.cts",
-	"module": "dist/index.mjs",
-	"exports": {
-		".": {
-			"import": {
-				"types": "./dist/index.d.mts",
-				"default": "./dist/index.mjs"
-			},
-			"require": {
-				"types": "./dist/index.d.cts",
-				"default": "./dist/index.cjs"
-			}
-		}
-	},
-	"bin": {
-		"mmcov": "bin/mmcov"
-	},
-	"scripts": {
-		"lint": "biome check --write lib",
-		"fmt": "biome format --write",
-		"hooks:install": "bash scripts/install-hooks.sh",
-		"commit": "bash scripts/commit.sh",
-		"build": "susee",
-		"v:patch": "npm version patch --no-git-tag-version",
-		"v:minor": "npm version minor --no-git-tag-version",
-		"v:major": "npm version major --no-git-tag-version"
-	},
-	"keywords": [
-		"lcov",
-		"lcov viewer"
-	],
-	"author": {
-		"name": "Pho Thin Mg",
-		"email": "phothinmg@disroot.org",
-		"url": "https://phothinmg.github.io/"
-	},
-	"license": "Apache-2.0",
-	"dependencies": {
-		"@shikijs/transformers": "^4.3.1",
-		"html-minifier-next": "^7.2.0",
-		"shiki": "^4.3.1"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.5.4",
-		"@suseejs/terser-plugin": "^0.0.7",
-		"@suseejs/type": "^0.0.7",
-		"@types/html-minifier-next": "^2.1.1",
-		"@types/node": "^26.1.1",
-		"susee": "^1.5.6",
-		"typescript": "^7.0.2"
-	},
-	"files": [
-		"package.json",
-		"README.md",
-		"LICENSE",
-		"dist/**/*",
-		"public",
-		"bin"
-	],
-	"publishConfig": {
-		"access": "public"
-	},
-	"repository": {
-		"url": "git+https://github.com/phothinmg/mmcov.git",
-		"type": "git"
-	},
-	"homepage": "https://github.com/phothinmg/mmcov/blob/main/README.md",
-	"bugs": {
-		"url": "https://github.com/phothinmg/mmcov/issues"
-	}
+  "name": "mmcov",
+  "version": "0.0.4",
+  "description": "Lcov viewer",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.cts",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "bin": {
+    "mmcov": "bin/mmcov"
+  },
+  "scripts": {
+    "lint": "biome check --write lib",
+    "fmt": "biome format --write",
+    "hooks:install": "bash scripts/install-hooks.sh",
+    "commit": "bash scripts/commit.sh",
+    "build": "susee",
+    "v:patch": "npm version patch --no-git-tag-version",
+    "v:minor": "npm version minor --no-git-tag-version",
+    "v:major": "npm version major --no-git-tag-version"
+  },
+  "keywords": [
+    "lcov",
+    "lcov viewer"
+  ],
+  "author": {
+    "name": "Pho Thin Mg",
+    "email": "phothinmg@disroot.org",
+    "url": "https://phothinmg.github.io/"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@shikijs/transformers": "^4.3.1",
+    "html-minifier-next": "^7.2.0",
+    "shiki": "^4.3.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.4",
+    "@suseejs/terser-plugin": "^0.0.7",
+    "@suseejs/type": "^0.0.7",
+    "@types/html-minifier-next": "^2.1.1",
+    "@types/node": "^26.1.1",
+    "susee": "^1.5.6",
+    "typescript": "^7.0.2"
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "dist/**/*",
+    "public",
+    "bin"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "url": "git+https://github.com/phothinmg/mmcov.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/phothinmg/mmcov/blob/main/README.md",
+  "bugs": {
+    "url": "https://github.com/phothinmg/mmcov/issues"
+  }
 }

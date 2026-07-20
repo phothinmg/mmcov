@@ -129,7 +129,7 @@ function createFileHtml(fileObj: FileObject, opts: Config) {
  * @returns The rendered HTML string (not yet minified).
  */
 async function createIndexHtml(obj: ReportObject, opts: Config) {
-	const fileName = `${opts.destDir}.html`;
+	const fileName = `${opts.destDir}/index.html`;
 	let html = indexHtml;
 	// main documents attrs
 	html = html.replace(rex.mainCss, mainCss);

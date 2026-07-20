@@ -61,11 +61,7 @@ type ReportObject = {
 	};
 	files: FileObject[];
 };
-type Jekyll = {
-	name: "jekyll";
-	siteDestDir?: string;
-};
-type FrameworkName = "jekyll" | "stand-alone";
+
 /** Options passed to `generateLcovReport` to control report generation. */
 type Options = {
 	/** Path to the lcov.info file (relative to `process.cwd()`). */

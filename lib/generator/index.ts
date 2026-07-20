@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Config } from "../config.js";
-import type { FileObject, Options, ReportObject } from "../types.js";
+import type { FileObject, ReportObject } from "../types.js";
 import { defaultLangs, shikiHL } from "./shiki.js";
 
 /**

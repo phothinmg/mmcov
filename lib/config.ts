@@ -32,7 +32,12 @@ const getConfigFilePath = (): string | null => {
 
 	return configFile;
 };
-const generateConfig = (opts: Options) => {
+/**
+ * Generates the configuration object based on the provided options.
+ * @param opts - The options to use for generating the configuration.
+ * @returns The generated configuration object.
+ */
+const generateConfig = (opts: Options): Config => {
 	const result = {} as Config;
 	result.lcovPath = opts.lcovPath;
 	result.destDir = opts.destDir ?? "coverage";
@@ -42,7 +47,12 @@ const generateConfig = (opts: Options) => {
 	result.mmdocs = opts.mmdocs ?? false;
 	return result;
 };
-const getOptionsFromConfigFile = async () => {
+
+/**
+ * Retrieves the configuration options from a configuration file.
+ * @returns The configuration options, or null if no configuration file is found.
+ */
+const getOptionsFromConfigFile = async (): Promise<Config | null> => {
 	const configPath = getConfigFilePath();
 	if (configPath) {
 		const _default: { default: Options } = await import(configPath as string);
@@ -53,7 +63,12 @@ const getOptionsFromConfigFile = async () => {
 	}
 };
 
-const getConfigOptions = async (opts?: Options) => {
+/**
+ * Retrieves the configuration options.
+ * @param opts  Options - The options to use for generating the configuration.
+ * @returns The generated configuration object or exit(1) if no configuration file is found or the user provides options .
+ */
+const getConfigOptions = async (opts?: Options): Promise<Config> => {
 	const config = await getOptionsFromConfigFile();
 	if (opts) {
 		console.info(`[mmcov info] : Start generate with given options.`);

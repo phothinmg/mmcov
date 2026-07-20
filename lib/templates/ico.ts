@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Config } from "../config.js";
-import type { Options } from "../types.js";
 import { defaultIco } from "./default-ico.js";
 
 /**

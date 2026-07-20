@@ -46,7 +46,7 @@ function generateBadge(report: ReportObject) {
 		"![mmcov](https://img.shields.io/badge/mmcov-{{percentage}}%25-{{color}}?style=flat&labelColor=%232c3e50)";
 	let html = `<img alt="mmcov" width="115" height="20" src="https://img.shields.io/badge/mmcov-{{percentage}}%25-{{color}}?style=flat&labelColor=%232c3e50">
 `;
-	let overall = `<img alt="mmcov" width="115" height="20" src="https://img.shields.io/badge/overall-{{percentage}}%25-{{color}}?style=flat&labelColor=%232c3e50">
+	let overall = `<img alt="mmcov" width="115" height="21" src="https://img.shields.io/badge/overall-{{percentage}}%25-{{color}}?style=flat&labelColor=%232c3e50">
 `;
 	markdown = markdown
 		.replace(rexPercentage, percentage)

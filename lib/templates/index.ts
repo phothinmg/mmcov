@@ -1,8 +1,9 @@
+import type { Config } from "../config.js";
 import { shikiHL } from "../generator/shiki.js";
+import { getReportClass } from "../helpers.js";
 import type { FileObject, Options, ReportObject } from "../types.js";
 import { fileHtml } from "./file/file-html.js";
 import { fileCss } from "./file/fileCss.js";
-import { getReportClass } from "./helpers.js";
 import { getIco } from "./ico.js";
 import { generateBadge } from "./index-file/badge.js";
 import { copyBtn } from "./index-file/copy-btn.js";
@@ -21,9 +22,8 @@ import { themeScript } from "./theme-script.js";
  * @param opts - Report options; `projectTitle` is used when set.
  * @returns A title string in the format `"<projectTitle>-<entryPath>"`.
  */
-const getFileTitle = (fileObj: FileObject, opts: Options) => {
-	const mainTitle = opts.projectTitle ?? "Coverage Report";
-	return `${mainTitle}-${fileObj.file.entryPath}`;
+const getFileTitle = (fileObj: FileObject, opts: Config) => {
+	return `${opts.projectTitle} | ${fileObj.file.entryPath}`;
 };
 /**
  * Capitalists the first letter of every word in `sentence`.
@@ -37,19 +37,7 @@ function capitalizeSentence(sentence: string) {
 		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 		.join(" ");
 }
-/**
- * Returns the report title used in the index page heading.
- *
- * @param opts - Report options; `projectTitle` overrides the default `"Coverage Report"`.
- * @returns The report title string.
- */
-const getReportTitle = (opts: Options) => {
-	let title = "Coverage Report";
-	if (opts.projectTitle) {
-		title = opts.projectTitle;
-	}
-	return title;
-};
+
 /**
  * Returns the full project name shown prominently on the index page.
  *
@@ -65,6 +53,17 @@ const getProjectName = (opts: Options) => {
 	}
 	return title;
 };
+const homeBannerNav = (badge: string, opts: Options) => {
+	const html = `<div class="banner-nav">
+  ${badge}
+   <a
+    class="back-home"
+    href="/"
+    aria-label="Go back to home page">&larr; Home Page
+    </a>
+  </div>`;
+	return opts?.mmdocs ? html : badge;
+};
 /**
  * Builds the full HTML string for an individual source-file coverage page.
  *
@@ -72,7 +71,7 @@ const getProjectName = (opts: Options) => {
  * @param opts - Report options (title, favicon, etc.).
  * @returns The rendered HTML string (not yet minified).
  */
-function createFileHtml(fileObj: FileObject, opts: Options) {
+function createFileHtml(fileObj: FileObject, opts: Config) {
 	let html = fileHtml;
 	// main documents attrs
 	html = html.replace(rex.mainCss, mainCss);
@@ -129,7 +128,8 @@ function createFileHtml(fileObj: FileObject, opts: Options) {
  * @param opts - Report options (title, favicon, etc.).
  * @returns The rendered HTML string (not yet minified).
  */
-async function createIndexHtml(obj: ReportObject, opts: Options) {
+async function createIndexHtml(obj: ReportObject, opts: Config) {
+	const fileName = `${opts.destDir}.html`;
 	let html = indexHtml;
 	// main documents attrs
 	html = html.replace(rex.mainCss, mainCss);
@@ -140,12 +140,11 @@ async function createIndexHtml(obj: ReportObject, opts: Options) {
 	html = html.replace(rex.copyBtn, copyBtn);
 	// index html
 	const badge = generateBadge(obj);
-	html = html.replace(rex.badge, badge.overall);
+	html = html.replace(rex.bannerNav, homeBannerNav(badge.overall, opts));
 	html = html.replace(rex.mdBadge, await shikiHL(badge.markdown, "md"));
 	html = html.replace(rex.htmlBadge, await shikiHL(badge.html, "html"));
 	html = html.replace(rex.indexCss, indexCss);
-	const projectTitle = getReportTitle(opts);
-	html = html.replace(rex.projectTitle, projectTitle);
+	html = html.replace(rex.projectTitle, opts.projectTitle);
 	const projectName = getProjectName(opts);
 	html = html.replace(rex.projectName, projectName);
 	// --
@@ -184,7 +183,7 @@ async function createIndexHtml(obj: ReportObject, opts: Options) {
 	// --
 	const rows = createFilesRows(obj);
 	html = html.replace(rex.tableRows, rows);
-	return html;
+	return { fileName, html };
 }
 
 export { createFileHtml, createIndexHtml };

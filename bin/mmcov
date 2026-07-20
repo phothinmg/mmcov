@@ -20,7 +20,7 @@ function printHelp() {
     ${styleText("bold", "Options :")}
         --entry <path>                        Entry file (optional if provided as positional <entry>)
         --out <path>                          Output directory (optional)
-        --source <...path>                    Source directories to include in the report (optional)
+        --source <dirs>                    Source directories to include in the report (optional)
         --favicon <path>                      Path to a custom favicon file. (optional)
         --project <name>                      Name of the project. (optional , example -> "my-project")
         

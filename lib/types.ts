@@ -61,19 +61,31 @@ type ReportObject = {
 	};
 	files: FileObject[];
 };
-
+type Jekyll = {
+	name: "jekyll";
+	siteDestDir?: string;
+};
+type FrameworkName = "jekyll" | "stand-alone";
 /** Options passed to `generateLcovReport` to control report generation. */
 type Options = {
 	/** Path to the lcov.info file (relative to `process.cwd()`). */
 	lcovPath: string;
 	/** Source directories to include in the report (e.g. `["src", "lib"]`). */
 	sourceDirs?: string[];
-	/** Output directory for the generated HTML files. Defaults to `"docs/coverage"`. */
+	/** Output directory for the generated HTML files. Defaults to `"coverage"`. */
 	destDir?: string;
 	/** Title displayed in the coverage report pages. */
 	projectTitle?: string;
 	/** Path to a custom favicon file. Falls back to the built-in icon when omitted. */
 	favicon?: string;
+	/**
+	 * For MMDOCS Site.
+	 *
+	 * @default false
+	 *
+	 * @since v0.0.5
+	 */
+	mmdocs?: boolean;
 };
 
 export type { FileObject, Options, ReportObject };

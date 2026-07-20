@@ -15,7 +15,7 @@ export const indexHtml = `<!doctype html>
       <div class="banner">
        <h1>{{ projectName }}</h1>
        <div class="banner-controls">
-          {{ badge }}
+          {{ bannerNav }}
            <button
             type="button"
             id="theme-btn"

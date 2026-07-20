@@ -144,6 +144,13 @@ main {
   gap: 12px;
   flex-wrap: wrap;
 }
+.banner .banner-controls div.banner-nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 .banner .back-home {
   display: inline-flex;
   align-items: center;
@@ -287,7 +294,10 @@ html[data-theme="dark"] .banner #theme-btn::before {
     flex-direction: column;
     align-items: stretch;
   }
-
+  .banner .banner-controls div.left {
+    flex-direction: column;
+    align-items: stretch;
+  }
   .banner .back-home {
     width: 100%;
     justify-content: center;

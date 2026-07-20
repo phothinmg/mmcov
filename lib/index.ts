@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { minify } from "html-minifier-next";
+import { type Config, getConfigOptions } from "./config.js";
 import { ReportGenerator } from "./generator/index.js";
 import { createFileHtml, createIndexHtml } from "./templates/index.js";
 import type { Options } from "./types.js";
@@ -11,12 +12,12 @@ import type { Options } from "./types.js";
  *
  * @param opts - Report generation options.
  */
-async function createFilePage(opts: Options): Promise<void> {
+async function createFilePage(opts: Config): Promise<void> {
 	const report = new ReportGenerator(opts);
 	const lcov = await report.generate();
 	for (const file of lcov.files) {
 		const filePath = path.resolve(process.cwd(), file.file.outputPath);
-		const html = createFileHtml(file, opts);
+		const html = await createFileHtml(file, opts);
 		if (!fs.existsSync(path.dirname(filePath))) {
 			await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
 		}
@@ -34,15 +35,12 @@ async function createFilePage(opts: Options): Promise<void> {
  *
  * @param opts - Report generation options.
  */
-async function createIndexPage(opts: Options): Promise<void> {
-	const report = new ReportGenerator(opts);
+async function createIndexPage(options: Config): Promise<void> {
+	const report = new ReportGenerator(options);
 	const lcov = await report.generate();
-	const fileName = opts.destDir
-		? `${opts.destDir}/index.html`
-		: "docs/coverage/index.html";
-	const filePath = path.resolve(process.cwd(), fileName);
-	const html = await createIndexHtml(lcov, opts);
-	const minifiedHtml = await minify(html, {
+	const home = await createIndexHtml(lcov, options);
+	const filePath = path.resolve(process.cwd(), home.fileName);
+	const minifiedHtml = await minify(home.html, {
 		minifyCSS: true,
 		collapseWhitespace: true,
 		removeComments: true,
@@ -59,7 +57,8 @@ async function createIndexPage(opts: Options): Promise<void> {
  *
  * @param opts - Report generation options.
  */
-async function generateLcovReport(opts: Options): Promise<void> {
+async function generateLcovReport(options?: Options): Promise<void> {
+	const opts = await getConfigOptions(options);
 	try {
 		await createFilePage(opts);
 		await createIndexPage(opts);

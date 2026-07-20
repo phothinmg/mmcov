@@ -32,7 +32,7 @@ export const rex = {
 	totalBranchesPercentage: /\{\{\s*totalBranchesPercentage\s*\}\}/gm,
 	totalBranchesInfo: /\{\{\s*totalBranchesInfo\s*\}\}/gm,
 	tableRows: /\{\{\s*tableRows\s*\}\}/gm,
-	badge: /\{\{\s*badge\s*\}\}/gm,
+	bannerNav: /\{\{\s*bannerNav\s*\}\}/gm,
 	mdBadge: /\{\{\s*mdBadge\s*\}\}/gm,
 	htmlBadge: /\{\{\s*htmlBadge\s*\}\}/gm,
 	copyBtn: /\{\{\s*copyBtn\s*\}\}/gm,

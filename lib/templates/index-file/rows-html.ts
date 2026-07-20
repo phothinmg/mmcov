@@ -1,5 +1,5 @@
+import { getReportClass } from "../../helpers.js";
 import type { FileObject, ReportObject } from "../../types.js";
-import { getReportClass } from "../helpers.js";
 
 const indexRegexp = {
 	linkHref: /\{\{\s*linkHref\s*\}\}/gm,

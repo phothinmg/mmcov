@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { Config } from "../config.js";
 import type { FileObject, Options, ReportObject } from "../types.js";
 import { defaultLangs, shikiHL } from "./shiki.js";
 
@@ -14,15 +15,19 @@ class ReportGenerator {
 	private _sources: string[] | undefined;
 	private _destDir: string;
 	private _report: ReportObject;
+	private _mmdocs: boolean;
+	private _config: Config;
 	/**
 	 * @param opts - Options that control which lcov file to parse, which source
 	 *   directories to include, and where to write the output.
 	 */
-	constructor({ lcovPath, sourceDirs, destDir }: Options) {
+	constructor(config: Config) {
 		this._root = process.cwd();
-		this._lcovPath = path.resolve(this._root, lcovPath);
-		this._sources = sourceDirs;
-		this._destDir = destDir ?? "docs/coverage";
+		this._config = config;
+		this._lcovPath = path.resolve(this._root, this._config.lcovPath);
+		this._sources = this._config.sourceDirs;
+		this._destDir = this._config.destDir;
+		this._mmdocs = this._config.mmdocs;
 		this._report = {
 			total: {
 				lines: {
@@ -70,7 +75,20 @@ class ReportGenerator {
 		parts = parts.slice(0, -1);
 		const file_name = `${parts.join("_")}_${fname}.html`;
 		const outputPath = path.join(this._destDir, file_name);
-		return { ext, outputPath, linkText: entryPath, linkHref: file_name };
+		/**
+		 * Added for MMDOCS sites
+		 *
+		 * @since v0.0.5
+		 */
+		let linkHref = file_name;
+		if (this._mmdocs) {
+			const dirParts = this._destDir.split("/");
+			if (dirParts.length > 1) {
+				const dir = dirParts.slice(1).join("/");
+				linkHref = `${dir}/${file_name}`;
+			}
+		}
+		return { ext, outputPath, linkText: entryPath, linkHref };
 	}
 	/**
 	 * Reads and pre-processes the lcov file, returning one string per source-file

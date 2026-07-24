@@ -69,18 +69,20 @@ const getOptionsFromConfigFile = async (): Promise<Config | null> => {
  * @returns The generated configuration object or exit(1) if no configuration file is found or the user provides options .
  */
 const getConfigOptions = async (opts?: Options): Promise<Config> => {
-	const config = await getOptionsFromConfigFile();
 	if (opts) {
 		console.info(`[mmcov info] : Start generate with given options.`);
 		return generateConfig(opts);
-	} else if (config !== null) {
-		console.info(
-			`[mmcov info] : Start generate with options from config file.`,
-		);
-		return config;
 	} else {
-		console.error(`[mmcov error] : Require options or config file.`);
-		process.exit(1);
+		const config = await getOptionsFromConfigFile();
+		if (config !== null) {
+			console.info(
+				`[mmcov info] : Start generate with options from config file.`,
+			);
+			return config;
+		} else {
+			console.error(`[mmcov error] : Require options or config file.`);
+			process.exit(1);
+		}
 	}
 };
 

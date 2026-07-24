@@ -80,24 +80,24 @@ class ReportGenerator {
 		 *
 		 * @since v0.0.5
 		 */
-		let linkHref = file_name;
-		if (this._mmdocs) {
-			const dirParts = this._destDir.split("/");
-			const folderPaths: string[] = [];
-			const outPaths: string[] = [];
-			for (const part in dirParts) {
-				if (part.startsWith(".")) {
-					folderPaths.push(part);
-				} else {
-					outPaths.push(part);
-				}
-			}
-			const dir =
-				outPaths.length > 1
-					? outPaths.slice(1).join("/")
-					: (outPaths[0] as string);
-			linkHref = `${dir}/${file_name}`;
-		}
+		const linkHref = file_name;
+		// if (this._mmdocs) {
+		//   const dirParts = this._destDir.split("/");
+		//   const folderPaths: string[] = [];
+		//   const outPaths: string[] = [];
+		//   for (const part in dirParts) {
+		//     if (part.startsWith(".")) {
+		//       folderPaths.push(part);
+		//     } else {
+		//       outPaths.push(part);
+		//     }
+		//   }
+		//   const dir =
+		//     outPaths.length > 1
+		//       ? outPaths.slice(1).join("/")
+		//       : (outPaths[0] as string);
+		//   linkHref = `${dir}/${file_name}`;
+		// }
 		return { ext, outputPath, linkText: entryPath, linkHref };
 	}
 	/**

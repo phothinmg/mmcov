@@ -13,14 +13,14 @@ import { defaultIco } from "./default-ico.js";
  * @returns A data URI string (`data:image/x-icon;base64,...`) or the default icon string.
  */
 function getIco(opts: Config): string {
-	if (opts.favicon === "default") {
-		return defaultIco;
-	} else {
-		const icoPath = path.resolve(process.cwd(), opts.favicon);
-		const buff = fs.readFileSync(icoPath, "base64");
-		const ico = `data:image/x-icon;base64,${buff}`;
-		return ico;
-	}
+  if (opts.favicon === "default") {
+    return defaultIco;
+  } else {
+    const icoPath = path.resolve(process.cwd(), opts.favicon);
+    const buff = fs.readFileSync(icoPath, "base64");
+    const ico = `data:image/x-icon;base64,${buff}`;
+    return ico;
+  }
 }
 
 export { getIco };

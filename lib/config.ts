@@ -4,12 +4,12 @@ import process from "node:process";
 import type { Options } from "./types.js";
 
 export type Config = {
-	lcovPath: string;
-	sourceDirs: string[];
-	destDir: string;
-	projectTitle: string;
-	favicon: string;
-	mmdocs: boolean;
+  lcovPath: string;
+  sourceDirs: string[];
+  destDir: string;
+  projectTitle: string;
+  favicon: string;
+  mmdocs: boolean;
 };
 
 /**
@@ -20,17 +20,17 @@ export type Config = {
  * @returns The path to the configuration file, or null if not found.
  */
 const getConfigFilePath = (): string | null => {
-	const fileNames = ["mmcov.config.ts", "mmcov.config.js", "mmcov.config.mjs"];
-	let configFile: string | null = null;
-	for (const file of fileNames) {
-		const _file = path.resolve(process.cwd(), file);
-		if (fs.existsSync(_file)) {
-			configFile = _file;
-			break;
-		}
-	}
+  const fileNames = ["mmcov.config.ts", "mmcov.config.js", "mmcov.config.mjs"];
+  let configFile: string | null = null;
+  for (const file of fileNames) {
+    const _file = path.resolve(process.cwd(), file);
+    if (fs.existsSync(_file)) {
+      configFile = _file;
+      break;
+    }
+  }
 
-	return configFile;
+  return configFile;
 };
 /**
  * Generates the configuration object based on the provided options.
@@ -38,14 +38,14 @@ const getConfigFilePath = (): string | null => {
  * @returns The generated configuration object.
  */
 const generateConfig = (opts: Options): Config => {
-	const result = {} as Config;
-	result.lcovPath = opts.lcovPath;
-	result.destDir = opts.destDir ?? "coverage";
-	result.sourceDirs = opts.sourceDirs ?? [];
-	result.projectTitle = opts.projectTitle ?? "Coverage Report";
-	result.favicon = opts.favicon ?? "default";
-	result.mmdocs = opts.mmdocs ?? false;
-	return result;
+  const result = {} as Config;
+  result.lcovPath = opts.lcovPath;
+  result.destDir = opts.destDir ?? "coverage";
+  result.sourceDirs = opts.sourceDirs ?? [];
+  result.projectTitle = opts.projectTitle ?? "Coverage Report";
+  result.favicon = opts.favicon ?? "default";
+  result.mmdocs = opts.mmdocs ?? false;
+  return result;
 };
 
 /**
@@ -53,14 +53,14 @@ const generateConfig = (opts: Options): Config => {
  * @returns The configuration options, or null if no configuration file is found.
  */
 const getOptionsFromConfigFile = async (): Promise<Config | null> => {
-	const configPath = getConfigFilePath();
-	if (configPath) {
-		const _default: { default: Options } = await import(configPath as string);
-		const config = _default.default;
-		return generateConfig(config);
-	} else {
-		return null;
-	}
+  const configPath = getConfigFilePath();
+  if (configPath) {
+    const _default: { default: Options } = await import(configPath as string);
+    const config = _default.default;
+    return generateConfig(config);
+  } else {
+    return null;
+  }
 };
 
 /**
@@ -69,21 +69,19 @@ const getOptionsFromConfigFile = async (): Promise<Config | null> => {
  * @returns The generated configuration object or exit(1) if no configuration file is found or the user provides options .
  */
 const getConfigOptions = async (opts?: Options): Promise<Config> => {
-	if (opts) {
-		console.info(`[mmcov info] : Start generate with given options.`);
-		return generateConfig(opts);
-	} else {
-		const config = await getOptionsFromConfigFile();
-		if (config !== null) {
-			console.info(
-				`[mmcov info] : Start generate with options from config file.`,
-			);
-			return config;
-		} else {
-			console.error(`[mmcov error] : Require options or config file.`);
-			process.exit(1);
-		}
-	}
+  if (opts) {
+    console.info(`[mmcov info] : Start generate with given options.`);
+    return generateConfig(opts);
+  } else {
+    const config = await getOptionsFromConfigFile();
+    if (config !== null) {
+      console.info(`[mmcov info] : Start generate with options from config file.`);
+      return config;
+    } else {
+      console.error(`[mmcov error] : Require options or config file.`);
+      process.exit(1);
+    }
+  }
 };
 
 export { getConfigOptions };

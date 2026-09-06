@@ -5,7 +5,7 @@
  * @returns `"high"` for ≥ 80 %, `"medium"` for 50–79 %, or `"low"` for < 50 %.
  */
 const getReportClass = (input: number) => {
-	return input >= 80 ? "high" : input >= 50 && input < 80 ? "medium" : "low";
+  return input >= 80 ? "high" : input >= 50 && input < 80 ? "medium" : "low";
 };
 
 /**
@@ -16,12 +16,12 @@ const getReportClass = (input: number) => {
  * @returns The HTML-escaped string.
  */
 function escapeHtml(value: string): string {
-	return value
-		.replaceAll("&", "&amp;")
-		.replaceAll("<", "&lt;")
-		.replaceAll(">", "&gt;")
-		.replaceAll('"', "&quot;")
-		.replaceAll("'", "&#39;");
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
 
 export { escapeHtml, getReportClass };

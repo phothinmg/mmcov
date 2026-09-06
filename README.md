@@ -1,4 +1,5 @@
 <!-- markdownlint-disable MD033 -->
+
 # <img src="./public/star.svg" alt="mmcov" width="20" hight="20" /> mmcov
 
 `mmcov` is a Node.js library that converts an `lcov.info` file into a static HTML coverage site.
@@ -59,20 +60,22 @@ mmcov coverage/lcov.info
 # Generate with explicit options
 mmcov --entry coverage/lcov.info --out coverage --source src,lib --project my-project --mmdocs
 ```
+
 <!-- markdownlint-disable MD036 -->
+
 **CLI options**
 
-| Flag | Description |
-| --- | --- |
-| `init` | Generate a starter config file |
-| `<entry>` | Path to the lcov file (positional, optional when `--entry` is used) |
-| `--entry <path>` | Path to the lcov file |
-| `--out <path>` | Output directory (maps to `destDir`) |
-| `--source <dirs>` | Comma-separated source directories to include (maps to `sourceDirs`) |
-| `--favicon <path>` | Path to a custom favicon file |
-| `--project <name>` | Project name; hyphens are replaced with spaces |
-| `--mmdocs` | Enable MMDOCS-compatible link generation |
-| `--help` | Print help text |
+| Flag               | Description                                                          |
+| ------------------ | -------------------------------------------------------------------- |
+| `init`             | Generate a starter config file                                       |
+| `<entry>`          | Path to the lcov file (positional, optional when `--entry` is used)  |
+| `--entry <path>`   | Path to the lcov file                                                |
+| `--out <path>`     | Output directory (maps to `destDir`)                                 |
+| `--source <dirs>`  | Comma-separated source directories to include (maps to `sourceDirs`) |
+| `--favicon <path>` | Path to a custom favicon file                                        |
+| `--project <name>` | Project name; hyphens are replaced with spaces                       |
+| `--mmdocs`         | Enable MMDOCS-compatible link generation                             |
+| `--help`           | Print help text                                                      |
 
 ## API
 
@@ -82,14 +85,14 @@ Parses the LCOV file, loads matching source files from the current working direc
 
 ## Options
 
-| Option | Type | Required | Description |
-| --- | --- | --- | --- |
-| `lcovPath` | `string` | Yes | Path to the `lcov.info` file, resolved from `process.cwd()` |
-| `sourceDirs` | `string[]` | No | Source directory prefixes to include from LCOV `SF:` entries, such as `src` or `lib` |
-| `destDir` | `string` | No | Output directory for generated files. Defaults to `coverage` |
-| `projectTitle` | `string` | No | Custom title used in the report header and page titles |
-| `favicon` | `string` | No | Path to a custom `.ico` file. When omitted, the built-in icon is used |
-| `mmdocs` | `boolean` | No | Enables MMDOCS-compatible link paths in generated pages |
+| Option         | Type       | Required | Description                                                                          |
+| -------------- | ---------- | -------- | ------------------------------------------------------------------------------------ |
+| `lcovPath`     | `string`   | Yes      | Path to the `lcov.info` file, resolved from `process.cwd()`                          |
+| `sourceDirs`   | `string[]` | No       | Source directory prefixes to include from LCOV `SF:` entries, such as `src` or `lib` |
+| `destDir`      | `string`   | No       | Output directory for generated files. Defaults to `coverage`                         |
+| `projectTitle` | `string`   | No       | Custom title used in the report header and page titles                               |
+| `favicon`      | `string`   | No       | Path to a custom `.ico` file. When omitted, the built-in icon is used                |
+| `mmdocs`       | `boolean`  | No       | Enables MMDOCS-compatible link paths in generated pages                              |
 
 ## Generated output
 

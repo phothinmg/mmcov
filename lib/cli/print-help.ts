@@ -1,7 +1,7 @@
 import { styleText } from "node:util";
 
 function printHelp() {
-	const help = `${styleText("bold", "mmcov cli")}
+  const help = `${styleText("bold", "mmcov cli")}
     ${styleText("bold", "Usage :")}
         mmcov                                 Run mmcov with config file.
         mmcov init                            Generate mmcov.config.{ts,js,mjs}
@@ -19,7 +19,7 @@ function printHelp() {
         mmcov lcov.info                        Generate from .lcov file.
         mmcov --entry lcov.info -out coverage  Generate from .lcov file to /coverage directory
     `;
-	console.log(help);
+  console.log(help);
 }
 
 export { printHelp };
